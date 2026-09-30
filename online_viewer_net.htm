@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для тебе ❤</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #090314 0%, #150a2b 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #f3f4f6;
+        }
+
+        .card {
+            background: rgba(20, 10, 35, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 24px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(147, 51, 234, 0.15);
+            transition: all 0.5s ease;
+        }
+
+        /* Подарункова коробка */
+        .box-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            padding: 20px 0;
+        }
+
+        .gift-box {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #9333ea, #6b21a8);
+            border-radius: 16px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(147, 51, 234, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: pulseBox 2s infinite;
+        }
+
+        .gift-box::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .gift-box::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes pulseBox {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(147, 51, 234, 0.3); }
+            50% { transform: scale(1.03); box-shadow: 0 0 25px rgba(168, 85, 247, 0.6); }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(147, 51, 234, 0.3); }
+        }
+
+        .box-title {
+            font-size: 16px;
+            color: #d8b4fe;
+            font-weight: 500;
+        }
+
+        /* Основний контент */
+        .content-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .content-section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Слайдер фото */
+        .photo-container {
+            width: 100%;
+            height: 260px;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            position: relative;
+            background: #0f071e;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+
+        .anim-text {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.6s ease;
+        }
+
+        .show-line {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #d1d5db;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        /* Блок компліментів */
+        .compliments-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .compliments-box p {
+            margin-bottom: 6px;
+            color: #e9d5ff;
+        }
+
+        .compliments-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+            min-height: 45px;
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 0.6s ease 1s;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-yes {
+            background-color: #9333ea;
+            color: white;
+            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+        }
+
+        .btn-yes:hover {
+            background-color: #a855f7;
+        }
+
+        .btn-no {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #9ca3af;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: absolute;
+            right: 15px;
+        }
+
+        .success-state h1 {
+            color: #c084fc;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" src="KRBK - Цветочек.mp3" preload="auto" loop></audio>
+
+    <div class="card" id="mainCard">
+        <!-- Початкова коробка -->
+        <div class="box-wrapper" id="boxWrapper" onclick="openBox()">
+            <div class="gift-box"></div>
+            <div class="box-title">Відчинити подарунок</div>
+        </div>
+
+        <!-- Основний контент -->
+        <div class="content-section" id="contentSection">
+            
+            <!-- Слайдер з фотографіями -->
+            <div class="photo-container anim-text" id="linePhoto">
+                <img id="sliderImg" src="1.jpg" alt="Наші фото">
+            </div>
+
+            <h1 class="anim-text" id="line1">Іро, вибач мені ❤️</h1>
+            
+            <p class="anim-text" id="line2">Я знаю, що був не правий і міг тебе чимось образити. Мені справді дуже через це прикро, бо ти — найрідніша і найважливіша людина для мене.</p>
+
+            <!-- Блок з компліментами -->
+            <div class="compliments-box anim-text" id="lineCompliments">
+                <p>✨ У тебе неймовірна краса і шикарний стиль</p>
+                <p>✨ Твої очі та посмішка зводять з розуму</p>
+                <p>✨ З тобою кожна мить і кожна прогулянка особливі</p>
+                <p>✨ Ти — найкраще, що є в моєму житті</p>
+            </div>
+
+            <p class="anim-text" id="line3">Я дуже хочу все виправити, бо без тебе мій світ втрачає фарби...</p>
+
+            <div class="buttons" id="actionButtons">
+                <button class="btn btn-yes" onclick="sayYes()">Прощаю</button>
+                <button class="btn btn-no" id="btnNo" onmouseover="moveButton()" onclick="moveButton()">Ні</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Список фотографій за простими назвами
+        const photos = [
+            "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", 
+            "6.jpg", "7.jpg", "8.jpg", "9.jpg", "10.jpg"
+        ];
+        
+        let currentPhotoIndex = 0;
+
+        function startPhotoSlider() {
+            setInterval(() => {
+                currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+                const imgElement = document.getElementById('sliderImg');
+                imgElement.style.opacity = '0';
+                setTimeout(() => {
+                    imgElement.src = photos[currentPhotoIndex];
+                    imgElement.style.opacity = '1';
+                }, 300);
+            }, 3000); // Зміна фото кожні 3 секунди
+        }
+
+        function openBox() {
+            const boxWrapper = document.getElementById('boxWrapper');
+            boxWrapper.style.opacity = '0';
+            boxWrapper.style.transform = 'scale(0.8)';
+            
+            const music = document.getElementById('bgMusic');
+            music.play().catch(e => console.log("Audio play blocked:", e));
+
+            setTimeout(() => {
+                boxWrapper.style.display = 'none';
+                
+                const content = document.getElementById('contentSection');
+                content.classList.add('active');
+
+                startPhotoSlider();
+
+                // Послідовна поява елементів
+                setTimeout(() => { document.getElementById('linePhoto').classList.add('show-line'); }, 200);
+                setTimeout(() => { document.getElementById('line1').classList.add('show-line'); }, 700);
+                setTimeout(() => { document.getElementById('line2').classList.add('show-line'); }, 1300);
+                setTimeout(() => { document.getElementById('lineCompliments').classList.add('show-line'); }, 1900);
+                setTimeout(() => { document.getElementById('line3').classList.add('show-line'); }, 2500);
+                setTimeout(() => { document.getElementById('actionButtons').style.opacity = '1'; }, 3100);
+
+            }, 400);
+        }
+
+        function moveButton() {
+            const btnNo = document.getElementById('btnNo');
+            const x = Math.random() * 100 - 50;
+            const y = Math.random() * 40 - 20;
+            btnNo.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function sayYes() {
+            const card = document.getElementById('mainCard');
+            card.innerHTML = `
+                <div class="success-state">
+                    <h1>Дякую тобі ❤️</h1>
+                    <p>Я дуже радий і ціную це. Напиши мені в Telegram, я чекаю!</p>
+                    <a href="https://t.me/flory_sector" class="btn btn-yes" target="_blank">Написати</a>
+                </div>
+            `;
+        }
+    </script>
+
+</body>
+</html>
